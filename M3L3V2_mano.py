@@ -96,9 +96,22 @@ st.pyplot(fig)
 
 # Chatbot for Q&A
 st.subheader("Ask Questions About Your Data")
+# Cache the completion function
+@st.cache_data
+def get_cached_completion(question: str, context: str):
+    return complete(
+        model="claude-3-5-sonnet", 
+        prompt=create_avalanche_prompt(question, context), 
+        session=session
+    )
+
+# Chatbot Q&A section
+st.subheader("Ask Questions About Your Data")
 user_question = st.text_input("Enter your question here:")
 
 if user_question:
-    response = complete(model="claude-3-5-sonnet", prompt=create_avalanche_prompt(user_question, df_string), session=session)
+    with st.spinner('Generating response...'):
+        response = get_cached_completion(user_question, df_string)
     st.write(response)
+
 
