@@ -95,7 +95,7 @@ ax.set_ylabel("Frequency")
 st.pyplot(fig)
 
 # Chatbot for Q&A
-st.subheader("Ask Questions About Your Data")
+
 # Cache the completion function
 @st.cache_data
 def get_cached_completion(question: str, context: str):
@@ -113,5 +113,6 @@ if user_question:
     with st.spinner('Generating response...'):
         response = get_cached_completion(user_question, df_string)
     st.write(response)
+
 
 
